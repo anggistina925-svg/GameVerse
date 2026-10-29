@@ -1,67 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArtikelController;
 
-Route::get('/', function () {
-    return view('beranda');
-});
+Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
-Route::get('/game/{nama}', function ($nama) {
-    $games = [
-        'free-fire' => [
-            'nama' => 'Free Fire',
-            'kategori' => 'BATTLE ROYALE',
-            'gambar' => 'free-fire.jpg',
-            'deskripsi' => 'Bertahan dan jadilah pemenang di arena pertempuran. Gunakan strategi dan kerja sama untuk meraih kemenangan.',
-            'download' => 'https://ff.garena.com/id/',
-        ],
+Route::get('/penulis', [HomeController::class, 'penulis'])->name('penulis');
 
-        'genshin-impact' => [
-            'nama' => 'Genshin Impact',
-            'kategori' => 'RPG',
-            'gambar' => 'genshin-impact.jpg',
-            'deskripsi' => 'Jelajahi dunia fantasi Teyvat, temukan karakter menarik, dan selesaikan berbagai petualangan.',
-            'download' => 'https://genshin.hoyoverse.com/',
-        ],
+Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
 
-        'minecraft' => [
-            'nama' => 'Minecraft',
-            'kategori' => 'SANDBOX',
-            'gambar' => 'Minecraft.jpg',
-            'deskripsi' => 'Bangun dunia impianmu, kumpulkan sumber daya, dan berkreasi tanpa batas.',
-            'download' => 'https://www.minecraft.net/download',
-        ],
-
-        'mobile-legends' => [
-            'nama' => 'Mobile Legends',
-            'kategori' => 'MOBA',
-            'gambar' => 'mobile-legend.jpg',
-            'deskripsi' => 'Bekerja sama dengan tim, pilih hero favorit, dan susun strategi untuk memenangkan pertandingan.',
-            'download' => 'https://play.google.com/store/apps/details?id=com.mobile.legends',
-        ],
-
-        'pubg-mobile' => [
-            'nama' => 'PUBG Mobile',
-            'kategori' => 'BATTLE ROYALE',
-            'gambar' => 'pubg-mobile.jpg',
-            'deskripsi' => 'Jelajahi medan pertempuran dan gunakan strategi untuk bertahan hingga akhir permainan.',
-            'download' => 'https://www.pubgmobile.com/id/home.shtml',
-        ],
-
-        'valorant' => [
-            'nama' => 'VALORANT',
-            'kategori' => 'FPS',
-            'gambar' => 'valorant.jpg',
-            'deskripsi' => 'Uji ketepatan, kemampuan, dan strategi tim dalam permainan tembak-menembak taktis.',
-            'download' => 'https://playvalorant.com/id-id/download/',
-        ],
-    ];
-
-    if (!isset($games[$nama])) {
-        abort(404);
-    }
-
-    return view('detail', [
-        'game' => $games[$nama],
-    ]);
-})->name('game.detail');
+Route::get('/kategori', [ArtikelController::class, 'kategori'])->name('artikel.kategori');
+Route::get('/artikel/{id}', [ArtikelController::class, 'detail'])
+    ->name('artikel.detail');
